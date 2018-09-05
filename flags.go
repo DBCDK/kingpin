@@ -232,6 +232,11 @@ func (a *FlagClause) HintOptions(options ...string) *FlagClause {
 	return a
 }
 
+func (a *FlagClause) HintFiles(extensions ...string) *FlagClause {
+	a.HintOptions("**hint-files**", strings.Join(extensions, "|"))
+	return a
+}
+
 func (a *FlagClause) EnumVar(target *string, options ...string) {
 	a.parserMixin.EnumVar(target, options...)
 	a.addHintActionBuiltin(func() []string {

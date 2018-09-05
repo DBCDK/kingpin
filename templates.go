@@ -238,11 +238,15 @@ _{{.App.Name}}_bash_autocomplete() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     opts=$( ${COMP_WORDS[0]} --completion-bash ${COMP_WORDS[@]:1:$COMP_CWORD} )
-    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    parts=( $opts )
+    if [ "${parts[0]}" == "**hint-files**" ]; then
+      _filedir '@('"${parts[1]}"')'
+    else
+      COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    fi
     return 0
 }
 complete -F _{{.App.Name}}_bash_autocomplete {{.App.Name}}
-
 `
 
 var ZshCompletionTemplate = `

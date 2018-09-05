@@ -2,6 +2,7 @@ package kingpin
 
 import (
 	"fmt"
+	"strings"
 )
 
 type argGroup struct {
@@ -170,6 +171,11 @@ func (a *ArgClause) HintOptions(options ...string) *ArgClause {
 	a.addHintAction(func() []string {
 		return options
 	})
+	return a
+}
+
+func (a *ArgClause) HintFiles(extensions ...string) *ArgClause {
+	a.HintOptions("**hint-files**", strings.Join(extensions, "|"))
 	return a
 }
 

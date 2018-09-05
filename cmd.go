@@ -24,7 +24,7 @@ func (c *cmdMixin) CmdCompletion(context *ParseContext) []string {
 	for _, el := range context.Elements {
 		switch clause := el.Clause.(type) {
 		case *ArgClause:
-			if el.Value != nil && *el.Value != "" {
+			if el.Value != nil && *el.Value != "" && clause.value.Set(*el.Value) == nil {
 				argsSatisfied++
 			}
 		case *CmdClause:
