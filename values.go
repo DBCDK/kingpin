@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/alecthomas/units"
+	"gopkg.in/mattes/go-expand-tilde.v1"
 )
 
 // NOTE: Most of the base type values were lifted from:
@@ -224,6 +225,10 @@ func newFileStatValue(p *string, predicate func(os.FileInfo) error) *fileStatVal
 }
 
 func (e *fileStatValue) Set(value string) error {
+	value, err := tilde.Expand(value)
+	if err != nil {
+		return err
+	}
 	if s, err := os.Stat(value); os.IsNotExist(err) {
 		return fmt.Errorf("path '%s' does not exist", value)
 	} else if err != nil {
