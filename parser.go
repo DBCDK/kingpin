@@ -177,7 +177,10 @@ func (p *ParseContext) Next() *Token {
 
 	// All remaining args are passed directly.
 	if arg == "--" {
-		p.argsOnly = true
+		// We already disabled flags after first arg, so the "--" arg should have no effect
+		if p.SelectedCommand == nil || (p.SelectedCommand != nil && !p.SelectedCommand.app.noInterspersed && !p.SelectedCommand.NoInterspersed) {
+			p.argsOnly = true
+		}
 		return p.Next()
 	}
 
