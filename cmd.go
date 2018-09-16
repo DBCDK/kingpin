@@ -195,6 +195,7 @@ type CmdClause struct {
 	validator      CmdClauseValidator
 	hidden         bool
 	completionAlts []string
+	NoInterspersed bool
 }
 
 func newCommand(app *Application, name, help string) *CmdClause {

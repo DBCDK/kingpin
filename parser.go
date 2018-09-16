@@ -345,7 +345,7 @@ loop:
 					context.Next()
 				}
 			} else if context.arguments.have() {
-				if app.noInterspersed {
+				if app.noInterspersed || context.SelectedCommand.NoInterspersed {
 					// no more flags
 					context.argsOnly = true
 				}
